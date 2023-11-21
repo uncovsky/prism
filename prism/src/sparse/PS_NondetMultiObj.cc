@@ -340,6 +340,7 @@ JNIEXPORT jdoubleArray __jlongpointer JNICALL Java_sparse_PrismSparse_PS_1Nondet
 			cols_r[rewi] = ndsm_r[rewi]->cols;
 		
 		bool doneBeforeBounded = false;
+        const double gamma = 0.9;
 		
 		h2_r = new int[lenRew];
 		l2_r = new int[lenRew];
@@ -405,12 +406,13 @@ JNIEXPORT jdoubleArray __jlongpointer JNICALL Java_sparse_PrismSparse_PS_1Nondet
 						}
 						// add prob * corresponding reward from previous iteration
 						// (for both combined and individual rewards)
+                        //TODO: edit here for discounted rew
 						for (int it = 0; it < lenRew + lenProb; it++) {
 							if (it != ignoredWeight) {
-								pd2[it] += non_zeros[k] * psoln[it][cols[k]];
+								pd2[it] += gamma * non_zeros[k] * psoln[it][cols[k]];
 							}
 						}
-						d2 += non_zeros[k] * soln[cols[k]];
+						d2 += gamma * non_zeros[k] * soln[cols[k]];
 					}
 					// see if the combined reward value is the min/max so far
 					bool pickThis = first || (min&&(d2<d1)) || (!min&&(d2>d1));
