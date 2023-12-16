@@ -340,7 +340,7 @@ JNIEXPORT jdoubleArray __jlongpointer JNICALL Java_sparse_PrismSparse_PS_1Nondet
 			cols_r[rewi] = ndsm_r[rewi]->cols;
 		
 		bool doneBeforeBounded = false;
-        const double gamma = 0.9;
+        const double gamma = 0.99;
 		
 		h2_r = new int[lenRew];
 		l2_r = new int[lenRew];
